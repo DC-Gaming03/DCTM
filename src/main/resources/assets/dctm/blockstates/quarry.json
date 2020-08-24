@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=north": { "model": "dctm:block/quarry" },
+        "facing=south": { "model": "dctm:block/quarry", "y": 180 },
+        "facing=west": { "model": "dctm:block/quarry", "y": 270 },
+        "facing=east": { "model": "dctm:block/quarry", "y": 90 },
+        "facing=up": { "model": "dctm:block/quarry", "x": -90 },
+        "facing=down": { "model": "dctm:block/quarry", "x": 90 }
+    }
+}

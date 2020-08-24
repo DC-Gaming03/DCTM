@@ -1,0 +1,11 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "down": "dctm:block/quarry",
+        "up": "dctm:block/quarry",
+        "east": "dctm:block/quarry",
+        "west": "dctm:block/quarry",
+        "north": "dctm:block/quarry_front",
+        "south": "dctm:block/quarry"
+    }
+}

@@ -1,0 +1,108 @@
+package mod.dcgames.dctm.blocks.machines;
+
+import mod.dcgames.dctm.util.NBTHelper;
+import mod.dcgames.dctm.util.RegistryHandler;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.fluid.IFluidState;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.math.BlockPos;
+
+import javax.annotation.Nullable;
+
+public class T1GeneratorTile extends TileEntity implements ITickableTileEntity {
+
+    public int x, y, z, tick;
+    boolean initialized = false;
+
+    public T1GeneratorTile(final TileEntityType<?> tileEntityTypeIn) {
+        super(tileEntityTypeIn);
+    }
+
+    public T1GeneratorTile() {
+        this(RegistryHandler.T1GENERATOR_TILE.get());
+    }
+
+    @Override
+    public void tick() {
+        if(initialized) init();
+        tick++;
+        if (tick == 40) {
+            tick = 0;
+            if (y > 5) {
+                execute();
+            }
+        }
+    }
+
+    private void init(){
+        initialized = true;
+        x = this.pos.getX() - 1;
+        y = this.pos.getY() -1;
+        z = this.pos.getZ() -1;
+        tick = 0;
+    }
+
+
+    public void execute() {
+        int index = 0;
+        Block[] blocksRemoved = new Block[9];
+        for(int x = 0; x < 3; x++) {
+            for(int z = 0; z < 3; z++) {
+                BlockPos postobreak = new BlockPos(this.x + x, this.y, this.z + z);
+                blocksRemoved[index] = this.world.getBlockState(postobreak).getBlock();
+                destoryBlock(postobreak, true, null);
+                index++;
+            }
+        }
+        this.y--;
+    }
+
+    private boolean destoryBlock(BlockPos pos, boolean dropBlock, @Nullable Entity entity) {
+        BlockState blockstate = world.getBlockState(pos);
+        BlockPos quarrypos = this.pos;
+        if(blockstate.isAir(world, pos)) {
+            return false;
+        }
+        else {
+            IFluidState ifluidstate = world.getFluidState(pos);
+            world.playEvent(2001, pos, Block.getStateId(blockstate));
+            if (dropBlock) {
+                TileEntity tileEntity = blockstate.hasTileEntity() ? world.getTileEntity(pos) : null;
+                Block.spawnDrops(blockstate, world, quarrypos, tileEntity, entity, ItemStack.EMPTY);
+            }
+            return world.setBlockState(pos, ifluidstate.getBlockState(), 3);
+        }
+    }
+
+    @Override
+    public CompoundNBT write(CompoundNBT compound) {
+        compound.put("initvalues", NBTHelper.toNBT(this));
+        return write(compound);
+    }
+
+    @Override
+    public void read(CompoundNBT compound) {
+        super.read(compound);
+        CompoundNBT initValues = compound.getCompound("initvalues");
+        if(initValues != null) {
+
+            this.x = initValues.getInt("x");
+            this.y = initValues.getInt("y");
+            this.z = initValues.getInt("z");
+            this.tick = 0;
+            initialized = true;
+            return;
+        }
+        else {
+            init();
+        }
+    }
+
+
+}

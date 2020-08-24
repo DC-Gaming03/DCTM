@@ -1,0 +1,19 @@
+{
+"itemGroup.DCTM_Items": "DCTM Items",
+"itemGroup.DCTM_Blocks": "DCTM Blocks",
+	
+"item.dctm.diamond_swaxle": "Diamond Swaxle",
+
+
+"item.dctm.thorns_charm": "Thorns Charm (WIP)",
+
+
+"item.dctm.mystic_hat": "Mystic Hat",
+  "item.dctm.mystic_robes": "Mystic Robes",
+  "item.dctm.mystic_leggings": "Mystic Leggings",
+  "item.dctm.mystic_boots": "Mystic Boots",
+
+  "block.dctm.t1_generator": "T1 Generator",
+  "item.dctm.t1_battery": "T1 Battery"
+
+}

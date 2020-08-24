@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "dctm:t1_battery"
+  },
+  "result": "dctm:t1_battery",
+  "experience": 0.0,
+  "cookingtime": 20
+}

@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": {"model": "dctm:block/t1_generator"}
+    }
+}
